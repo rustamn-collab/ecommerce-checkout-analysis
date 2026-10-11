@@ -50,3 +50,8 @@
 ### 7.3.1. Описание
 
 Система «Checkout Platform» состоит из микросервисов, базы данных, брокера сообщений и API Gateway. Каждый контейнер — отдельно деплоимая единица.
+
+### 7.3.2. Диаграмма C4 Container
+![C4 Container](../diagrams/architecture-container.png)
+
+Исходник: [architecture-container.puml](../diagrams/architecture-container.puml)
