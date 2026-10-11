@@ -176,3 +176,8 @@
 ## 6.6. Декомпозиция процесса TO-BE по подпроцессам
 ### 6.6.1. Подпроцесс «Расчёт корзины»
 
+![Подпроцесс «Расчёт корзины»](../diagrams/subprocess-cart.png)
+
+Исходник диаграммы: [subprocess-cart.puml](../diagrams/subprocess-cart.puml)
+
+
