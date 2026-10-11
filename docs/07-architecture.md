@@ -30,3 +30,23 @@
 ![C4 Context](../diagrams/architecture-context.png)
 
 Исходник: [architecture-context.puml](../diagrams/architecture-context.puml)
+
+### 7.2.3. Акторы и системы
+
+| Элемент | Тип | Описание |
+|---------|-----|----------|
+| Клиент | Person | Пользователь мобильного приложения или сайта |
+| Оператор | Person | Сотрудник клиентского сервиса |
+| Checkout Platform | System | Проектируемая система |
+| Payment Gateway | External System | Внешний платёжный шлюз |
+| ERP System | External System | Учёт остатков и заказов |
+| WMS | External System | Управление складом |
+| Courier Services | External System | Курьерские службы |
+| Push/SMS Provider | External System | FCM, APNS, SMS-шлюз |
+
+---
+## 7.3. Level 2 — Container
+
+### 7.3.1. Описание
+
+Система «Checkout Platform» состоит из микросервисов, базы данных, брокера сообщений и API Gateway. Каждый контейнер — отдельно деплоимая единица.
