@@ -1,0 +1,27 @@
+```plantuml
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title C4 Level 1: System Context — Checkout Platform
+
+Person(client, "Клиент", "Пользователь мобильного приложения или сайта")
+Person(operator, "Оператор", "Сотрудник клиентского сервиса")
+
+System(checkout, "Checkout Platform", "Оформление заказов, расчёт доставки, онлайн-оплата")
+
+System_Ext(payment, "Payment Gateway", "Внешний платёжный шлюз")
+System_Ext(erp, "ERP System", "Учёт остатков и заказов")
+System_Ext(wms, "WMS", "Управление складом")
+System_Ext(courier, "Courier Services", "Курьерские службы")
+System_Ext(push, "Push/SMS Provider", "FCM, APNS, SMS-шлюз")
+
+Rel(client, checkout, "Оформляет заказ", "HTTPS")
+Rel(operator, checkout, "Разбирает инциденты", "HTTPS")
+Rel(checkout, payment, "Инициирует оплату", "REST/HTTPS")
+Rel(checkout, erp, "Проверяет остатки, подтверждает заказ", "REST/HTTPS")
+Rel(checkout, wms, "Передаёт заказ на сборку", "REST/HTTPS")
+Rel(checkout, courier, "Передаёт заказ на доставку", "REST/HTTPS")
+Rel(checkout, push, "Отправляет уведомления", "REST/HTTPS")
+
+@enduml
+```
