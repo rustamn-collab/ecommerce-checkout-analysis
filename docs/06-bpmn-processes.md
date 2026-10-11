@@ -185,3 +185,8 @@
 
 Исходник диаграммы: [subprocess-cart.puml](../diagrams/subprocess-reservation.puml)
 
+### 6.6.3. Подпроцесс «Отмена заказа»
+![Подпроцесс «Отмена заказа»](../diagrams/subprocess-cancel.png)
+
+Исходник диаграммы: [subprocess-cart.puml](../diagrams/subprocess-cancel.puml)
+
