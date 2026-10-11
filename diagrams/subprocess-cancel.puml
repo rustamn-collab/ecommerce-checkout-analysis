@@ -1,0 +1,42 @@
+```plantuml
+@startuml
+!theme plain
+title Подпроцесс: Отмена заказа
+
+|Клиент|
+start
+:Нажать "Отменить заказ";
+
+|Checkout Service|
+:POST /api/v1/checkout/cancel;
+:Проверить статус заказа;
+
+if (Статус <= PAID?) then (да)
+  if (Оплата прошла?) then (да)
+    :Инициировать возврат\nв Payment Gateway;
+    :Обновить статус REFUND_PENDING;
+  else (нет)
+    :Обновить статус CANCELLED;
+  endif
+
+  :Снять резерв в ERP;
+  :Публиковать order.cancelled;
+
+  |Kafka|
+  fork
+    :Notification Service\nуведомляет клиента;
+  fork again
+    :Logistics Service\nотменяет доставку;
+  end fork
+
+  |Клиент|
+  :Получить подтверждение;
+  stop
+else (нет)
+  |Checkout Service|
+  :Вернуть 409 CANCELLATION_NOT_ALLOWED;
+  stop
+endif
+
+@enduml
+```
