@@ -1,0 +1,29 @@
+```plantuml
+@startuml
+!theme plain
+title Подпроцесс: Резервирование товара
+
+|Checkout Service|
+start
+:Получить запрос на чекаут;
+:Проверить остатки в ERP;
+
+if (Товар доступен?) then (да)
+  :Зарезервировать на 15 минут;
+  :Создать таймер автоснятия;
+
+  if (Оплата прошла?) then (да)
+    :Подтвердить резерв;
+    stop
+  else (нет)
+    :Снять резерв;
+    :Публиковать order.expired;
+    stop
+  endif
+else (нет)
+  :Вернуть 409 OUT_OF_STOCK;
+  stop
+endif
+
+@enduml
+```
