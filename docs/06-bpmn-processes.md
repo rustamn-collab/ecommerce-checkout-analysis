@@ -123,81 +123,9 @@
 
 ### 6.4.3. BPMN-диаграмма TO-BE
 
-```plantuml
-@startuml
-!theme plain
-title BPMN TO-BE: Оформление заказа (после проекта)
+![BPMN TO-BE](../diagrams/bpmn-to-be.png)
 
-|#LightBlue|Клиент|
-start
-:Добавить товар в корзину;
-:Открыть корзину;
-:Выбрать адрес и слот;
-:Нажать "Оформить заказ";
-
-|#LightYellow|Frontend|
-:GET /api/v1/cart;
-:POST /api/v1/checkout/confirm;
-
-|#LightGreen|Cart Service|
-:Проверить остатки и цены в ERP;
-:Запросить доставку у Logistics;
-
-if (Товар в наличии?) then (нет)
-  |#LightBlue|Клиент|
-  :Сообщение "Товар закончился";
-  :Удалить или сохранить корзину;
-  stop
-else (да)
-endif
-
-|#Pink|Checkout Service|
-:Создать черновик заказа;
-:Резервировать товар на 15 минут;
-:Инициировать платёж;
-
-|#LightCoral|Payment Gateway|
-:Оплата;
-
-|#Pink|Checkout Service|
-if (Оплата прошла?) then (нет)
-  :Статус PAYMENT_FAILED;
-else (да)
-  :Подтвердить заказ в ERP;
-  :Публиковать order.confirmed;
-  
-  |#LightGray|Kafka|
-  fork
-    :Notification Service\nотправляет push/SMS;
-  fork again
-    :Logistics Service\nсплитует и передаёт\nв курьерскую службу;
-  end fork
-  
-  |#LightBlue|Клиент|
-  :Получить уведомление;
-  :Отслеживать статус заказа;
-  stop
-endif
-
-|#LightBlue|Клиент|
-if (Действие клиента?) then (повторить оплату)
-  |#Pink|Checkout Service|
-  :Создать новый платёж;
-  note right: Возврат к оплате
-  stop
-elseif (отменить заказ)
-  |#Pink|Checkout Service|
-  :Снять резерв;
-  :Публиковать order.cancelled;
-  stop
-else (таймаут 15 мин)
-  |#Pink|Checkout Service|
-  :Автоснятие резерва;
-  :Статус EXPIRED;
-  stop
-endif
-@enduml
-```
+Исходник диаграммы: [bpmn-to-be.puml](../diagrams/bpmn-to-be.puml)
 ### 6.4.4. Что изменилось в TO-BE
 
 | Аспект | AS-IS | TO-BE |
