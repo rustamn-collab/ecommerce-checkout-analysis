@@ -55,3 +55,26 @@
 ![C4 Container](../diagrams/architecture-container.png)
 
 Исходник: [architecture-container.puml](../diagrams/architecture-container.puml)
+
+### 7.3.3. Контейнеры
+
+| Контейнер | Технология | Роль |
+|-----------|-----------|------|
+| Web App | React | Веб-интерфейс интернет-магазина |
+| Mobile App | iOS/Android | Мобильное приложение |
+| API Gateway | Kong / NGINX | Точка входа, аутентификация, rate limiting |
+| Cart Service | Java/Kotlin | Корзина, проверка остатков и цен |
+| Checkout Service | Java/Kotlin | Оформление заказа, резервирование, платежи |
+| Logistics Service | Java/Kotlin | Расчёт доставки, сплитование |
+| Order Service | Java/Kotlin | Управление заказами и статусами |
+| Notification Service | Java/Kotlin | Push/SMS/email-уведомления |
+| PostgreSQL | PostgreSQL 14 | Основная БД |
+| Redis | Redis 7 | Кэш и сессии |
+| Apache Kafka | Kafka 3.4 | Шина событий |
+
+---
+
+## 7.4. Level 3 — Component (Checkout Service)
+
+### 7.4.1. Описание
+Checkout Service — центральный сервис оформления заказа. Внутри него выделены компоненты, каждый из которых отвечает за свою задачу.
