@@ -1,0 +1,30 @@
+```plantuml
+@startuml
+!theme plain
+title Подпроцесс: Расчёт корзины
+
+|Frontend|
+start
+:GET /api/v1/cart;
+
+|Cart Service|
+:Получить корзину из БД;
+:Запросить остатки у ERP;
+:Запросить цены у ERP;
+:Запросить доставку у Logistics;
+
+|Logistics Service|
+:Рассчитать стоимость;
+:Найти доступные слоты;
+:Вернуть результат;
+
+|Cart Service|
+:Сформировать итоговую сумму;
+:Вернуть ответ;
+
+|Frontend|
+:Отобразить корзину;
+stop
+
+@enduml
+```
