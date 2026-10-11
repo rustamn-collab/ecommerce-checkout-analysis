@@ -24,3 +24,9 @@
 ### 7.2.1. Описание
 
 Система «Checkout Platform» — это ядро оформления заказов в e-commerce. Она взаимодействует с внешними акторами (клиент, оператор) и внешними системами (Payment Gateway, ERP, WMS, курьерские службы).
+
+### 7.2.2. Диаграмма C4 Context
+
+![C4 Context](../diagrams/architecture-context.png)
+
+Исходник: [architecture-context.puml](../diagrams/architecture-context.puml)
