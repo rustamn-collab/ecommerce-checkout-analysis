@@ -180,4 +180,8 @@
 
 Исходник диаграммы: [subprocess-cart.puml](../diagrams/subprocess-cart.puml)
 
+### 6.6.2. Подпроцесс «Резервирование товара»
+![Подпроцесс «Резервирование товара»](../diagrams/subprocess-reservation.png)
+
+Исходник диаграммы: [subprocess-cart.puml](../diagrams/subprocess-reservation.puml)
 
