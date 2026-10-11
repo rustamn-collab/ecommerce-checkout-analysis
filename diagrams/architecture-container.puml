@@ -1,0 +1,60 @@
+```plantuml
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title C4 Level 2: Container — Checkout Platform
+
+Person(client, "Клиент", "Пользователь приложения или сайта")
+
+System_Boundary(checkout, "Checkout Platform") {
+    Container(web, "Web App", "React", "Веб-интерфейс")
+    Container(mobile, "Mobile App", "iOS/Android", "Мобильное приложение")
+    Container(gateway, "API Gateway", "Kong / NGINX", "Точка входа, аутентификация, rate limiting")
+    
+    Container(cart, "Cart Service", "Java/Kotlin", "Корзина, проверка остатков")
+    Container(checkout_svc, "Checkout Service", "Java/Kotlin", "Оформление заказа, резервирование")
+    Container(logistics, "Logistics Service", "Java/Kotlin", "Расчёт доставки, сплитование")
+    Container(order, "Order Service", "Java/Kotlin", "Управление заказами, статусы")
+    Container(notification, "Notification Service", "Java/Kotlin", "Push/SMS/email")
+    
+    ContainerDb(db, "PostgreSQL", "PostgreSQL 14", "Заказы, корзины, платежи, доставки")
+    ContainerDb(redis, "Redis", "Redis 7", "Кэш остатков и цен, сессии")
+    ContainerQueue(kafka, "Apache Kafka", "Kafka 3.4", "Шина событий")
+}
+
+System_Ext(payment, "Payment Gateway", "Платёжный шлюз")
+System_Ext(erp, "ERP System", "Остатки и заказы")
+System_Ext(wms, "WMS", "Склад")
+System_Ext(courier, "Courier Services", "Доставка")
+
+Rel(client, web, "Использует", "HTTPS")
+Rel(client, mobile, "Использует", "HTTPS")
+Rel(web, gateway, "API-запросы", "REST/HTTPS")
+Rel(mobile, gateway, "API-запросы", "REST/HTTPS")
+
+Rel(gateway, cart, "Маршрутизация", "REST")
+Rel(gateway, checkout_svc, "Маршрутизация", "REST")
+Rel(gateway, order, "Маршрутизация", "REST")
+
+Rel(cart, erp, "Проверка остатков", "REST")
+Rel(cart, redis, "Кэш", "Redis protocol")
+Rel(cart, db, "Чтение/запись", "SQL")
+
+Rel(checkout_svc, cart, "Получение корзины", "REST")
+Rel(checkout_svc, logistics, "Расчёт доставки", "REST")
+Rel(checkout_svc, payment, "Инициирование оплаты", "REST")
+Rel(checkout_svc, erp, "Резерв товара", "REST")
+Rel(checkout_svc, db, "Чтение/запись", "SQL")
+Rel(checkout_svc, kafka, "Публикация событий", "Kafka protocol")
+
+Rel(logistics, courier, "Передача заказа", "REST")
+Rel(logistics, wms, "Передача на сборку", "REST")
+
+Rel(order, db, "Чтение/запись", "SQL")
+Rel(notification, kafka, "Подписка на события", "Kafka protocol")
+Rel(notification, client, "Push/SMS", "HTTPS")
+
+Rel(kafka, order, "События", "Kafka protocol")
+
+@enduml
+```
