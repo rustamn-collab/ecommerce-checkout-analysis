@@ -1,0 +1,31 @@
+```plantuml
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Deployment.puml
+
+title C4 Deployment: Kubernetes-кластер
+
+Deployment_Node(k8s, "Kubernetes Cluster", "K8s 1.28") {
+    Deployment_Node(ingress, "Ingress", "NGINX Ingress") {
+        Container(gateway, "API Gateway", "Kong")
+    }
+    Deployment_Node(apps, "App Namespace") {
+        Container(cart, "Cart Service", "Java", "3 реплики")
+        Container(checkout_svc, "Checkout Service", "Java", "5 реплик")
+        Container(logistics, "Logistics Service", "Java", "3 реплики")
+        Container(order, "Order Service", "Java", "3 реплики")
+        Container(notification, "Notification Service", "Java", "2 реплики")
+    }
+    Deployment_Node(data, "Data Namespace") {
+        ContainerDb(db, "PostgreSQL", "Primary + 2 replicas")
+        ContainerDb(redis, "Redis", "Cluster 3 nodes")
+        ContainerQueue(kafka, "Kafka", "3 brokers")
+    }
+    Deployment_Node(monitoring, "Monitoring") {
+        Container(prometheus, "Prometheus", "")
+        Container(grafana, "Grafana", "")
+        Container(jaeger, "Jaeger", "")
+    }
+}
+
+@enduml
+```
