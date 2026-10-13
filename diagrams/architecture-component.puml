@@ -1,0 +1,45 @@
+```plantuml
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title C4 Level 3: Component — Checkout Service
+
+Container_Boundary(checkout_svc, "Checkout Service") {
+    Component(api, "Checkout API", "Spring MVC", "REST-контроллеры для чекаута")
+    Component(order_comp, "Order Manager", "Spring Service", "Создание и управление заказом")
+    Component(reserve, "Reservation Manager", "Spring Service", "Резервирование товара на 15 минут")
+    Component(payment_comp, "Payment Manager", "Spring Service", "Взаимодействие с Payment Gateway")
+    Component(publish, "Event Publisher", "Spring Kafka", "Публикация событий в Kafka")
+    Component(dlq, "DLQ Handler", "Spring Kafka", "Обработка зависших событий")
+    Component(repo, "Order Repository", "Spring Data JPA", "Доступ к БД")
+}
+
+ContainerDb(db, "PostgreSQL", "PostgreSQL 14", "Заказы и платежи")
+ContainerQueue(kafka, "Kafka", "Kafka 3.4", "Шина событий")
+System_Ext(payment, "Payment Gateway", "Платёжный шлюз")
+System_Ext(erp, "ERP System", "Остатки")
+Container(cart, "Cart Service", "Java/Kotlin", "Корзина")
+Container(logistics, "Logistics Service", "Java/Kotlin", "Доставка")
+
+Rel(api, order_comp, "Вызывает", "Java")
+Rel(api, reserve, "Вызывает", "Java")
+Rel(api, payment_comp, "Вызывает", "Java")
+
+Rel(order_comp, repo, "Сохраняет заказ", "Java")
+Rel(order_comp, cart, "Запрашивает корзину", "REST")
+Rel(order_comp, logistics, "Запрашивает доставку", "REST")
+Rel(order_comp, erp, "Подтверждает заказ", "REST")
+
+Rel(reserve, erp, "Резервирует товар", "REST")
+Rel(reserve, repo, "Сохраняет резерв", "Java")
+
+Rel(payment_comp, payment, "Инициирует платёж", "REST")
+Rel(payment_comp, publish, "Публикует payment.*", "Java")
+
+Rel(publish, kafka, "Публикует события", "Kafka protocol")
+Rel(dlq, kafka, "Слушает DLQ", "Kafka protocol")
+
+Rel(repo, db, "Чтение/запись", "SQL")
+
+@enduml
+```
