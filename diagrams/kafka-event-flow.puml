@@ -1,0 +1,42 @@
+```plantuml
+@startuml
+!theme plain
+title Полный поток событий заказа через Kafka
+
+participant "Checkout Service" as CH
+queue "order.events" as OE
+queue "payment.events" as PE
+queue "delivery.events" as DE
+participant "Order Service" as OS
+participant "Notification Service" as NS
+participant "Logistics Service" as LS
+participant "Analytics" as AN
+
+CH -> OE : order.created
+OE -> OS : order.created
+OE -> NS : order.created
+OE -> AN : order.created
+
+CH -> PE : payment.success
+PE -> OS : payment.success
+PE -> NS : payment.success
+PE -> AN : payment.success
+
+CH -> OE : order.confirmed
+OE -> OS : order.confirmed
+OE -> LS : order.confirmed
+OE -> NS : order.confirmed
+OE -> AN : order.confirmed
+
+LS -> DE : delivery.assigned
+DE -> OS : delivery.assigned
+DE -> NS : delivery.assigned
+DE -> AN : delivery.assigned
+
+LS -> DE : delivery.delivered
+DE -> OS : delivery.delivered
+DE -> NS : delivery.delivered
+DE -> AN : delivery.delivered
+
+@enduml
+```
