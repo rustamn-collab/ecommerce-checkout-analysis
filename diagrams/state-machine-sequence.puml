@@ -1,0 +1,38 @@
+```plantuml
+@startuml
+!theme plain
+title Последовательность изменения статусов заказа
+
+participant "Клиент" as C
+participant "Checkout Service" as CH
+participant "Payment Gateway" as PG
+participant "ERP" as ERP
+participant "WMS" as WMS
+participant "Courier" as CR
+database "БД" as DB
+
+C -> CH : Оформить заказ
+CH -> DB : Создать заказ (DRAFT)
+CH -> CH : Резерв 15 мин
+CH -> DB : Обновить (PENDING_PAYMENT)
+
+PG --> CH : payment.success
+CH -> DB : Обновить (PAID)
+CH -> ERP : Подтвердить заказ
+ERP --> CH : OK
+CH -> DB : Обновить (CONFIRMED)
+
+WMS --> CH : Начал сборку
+CH -> DB : Обновить (ASSEMBLING)
+
+WMS --> CH : Сборка завершена
+CH -> DB : Обновить (READY_FOR_SHIPMENT)
+
+CR --> CH : Заказ передан курьеру
+CH -> DB : Обновить (IN_TRANSIT)
+
+CR --> CH : Заказ доставлен
+CH -> DB : Обновить (DELIVERED)
+
+@enduml
+```
