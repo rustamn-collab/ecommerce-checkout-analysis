@@ -78,3 +78,8 @@
 
 ### 7.4.1. Описание
 Checkout Service — центральный сервис оформления заказа. Внутри него выделены компоненты, каждый из которых отвечает за свою задачу.
+
+### 7.4.2. Диаграмма C4 Component
+![C4 Component](../diagrams/architecture-component.png)
+
+Исходник: [architecture-component.puml](../diagrams/architecture-component.puml)
