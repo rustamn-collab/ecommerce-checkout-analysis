@@ -524,3 +524,6 @@ Kafka гарантирует **at-least-once** — это значит, что �
 ---
 
 ## 9.11. Пример: Полный поток событий заказа
+![Kafka Event Flow](../diagrams/kafka-event-flow.png)
+
+Исходник: [kafka-event-flow.puml](../diagrams/kafka-event-flow.puml)
