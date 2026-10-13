@@ -271,3 +271,6 @@ Checkout Service — центральный сервис оформления з
 
 ## 7.8. Диаграмма развёртывания (Deployment)
 
+![Deployment](../diagrams/architecture-deployment.png)
+
+Исходник: [architecture-deployment.puml](../diagrams/architecture-deployment.puml)
