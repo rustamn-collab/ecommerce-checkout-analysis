@@ -1,0 +1,17 @@
+```plantuml
+@startuml
+!theme plain
+title Жизненный цикл бага
+
+[*] --> New : Обнаружен
+New --> Assigned : Назначен разработчику
+Assigned --> InProgress : В работе
+InProgress --> Fixed : Исправлен
+Fixed --> InTesting : На тестировании
+InTesting --> Closed : Подтверждён
+InTesting --> Reopened : Не исправлен
+Reopened --> InProgress : Возврат в работу
+Closed --> [*]
+
+@enduml
+```
