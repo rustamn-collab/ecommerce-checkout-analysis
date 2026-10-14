@@ -223,4 +223,8 @@
 | Security | OWASP ZAP |
 
 
+### 12.8.2. CI/CD интеграция
+![CICD интеграция](../diagrams/cicd-pipeline.png)
+
+Исходник: [cicd-pipeline.puml](../diagrams/cicd-pipeline.puml)
 
