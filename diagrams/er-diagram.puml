@@ -1,0 +1,143 @@
+```plantuml
+@startuml
+!theme plain
+title ER-диаграмма: Модель данных системы чекаута
+
+entity "users" as users {
+  * id : UUID <<PK>>
+  --
+  email : VARCHAR(255) <<UNIQUE>>
+  phone : VARCHAR(20) <<UNIQUE>>
+  name : VARCHAR(255)
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+entity "carts" as carts {
+  * id : UUID <<PK>>
+  --
+  user_id : UUID <<FK users>>
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+entity "cart_items" as cart_items {
+  * id : UUID <<PK>>
+  --
+  cart_id : UUID <<FK carts>>
+  product_id : UUID <<FK products>>
+  quantity : INT
+  added_at : TIMESTAMP
+}
+
+entity "orders" as orders {
+  * id : UUID <<PK>>
+  --
+  user_id : UUID <<FK users>>
+  status : VARCHAR(32)
+  subtotal : DECIMAL(12,2)
+  delivery_amount : DECIMAL(12,2)
+  total_amount : DECIMAL(12,2)
+  currency : VARCHAR(3)
+  erp_order_number : VARCHAR(64)
+  reservation_expires_at : TIMESTAMP
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+entity "order_items" as order_items {
+  * id : UUID <<PK>>
+  --
+  order_id : UUID <<FK orders>>
+  product_id : UUID <<FK products>>
+  warehouse_id : UUID <<FK warehouses>>
+  quantity : INT
+  price : DECIMAL(12,2)
+  total : DECIMAL(12,2)
+  status : VARCHAR(32)
+}
+
+entity "order_status_history" as order_status_history {
+  * id : UUID <<PK>>
+  --
+  order_id : UUID <<FK orders>>
+  from_status : VARCHAR(32)
+  to_status : VARCHAR(32)
+  reason : VARCHAR(255)
+  triggered_by : VARCHAR(64)
+  event_id : UUID
+  created_at : TIMESTAMP
+}
+
+entity "payments" as payments {
+  * id : UUID <<PK>>
+  --
+  order_id : UUID <<FK orders>>
+  amount : DECIMAL(12,2)
+  currency : VARCHAR(3)
+  status : VARCHAR(32)
+  method : VARCHAR(32)
+  external_id : VARCHAR(128) <<UNIQUE>>
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+entity "deliveries" as deliveries {
+  * id : UUID <<PK>>
+  --
+  order_id : UUID <<FK orders>>
+  address : JSONB
+  slot_start : TIMESTAMP
+  slot_end : TIMESTAMP
+  courier_service : VARCHAR(64)
+  tracking_number : VARCHAR(128)
+  status : VARCHAR(32)
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+entity "products" as products {
+  * id : UUID <<PK>>
+  --
+  name : VARCHAR(255)
+  sku : VARCHAR(64) <<UNIQUE>>
+  price : DECIMAL(12,2)
+  dimensions : JSONB
+  weight : DECIMAL(8,2)
+  category : VARCHAR(64)
+}
+
+entity "warehouses" as warehouses {
+  * id : UUID <<PK>>
+  --
+  name : VARCHAR(255)
+  address : JSONB
+  region : VARCHAR(64)
+  is_active : BOOLEAN
+}
+
+entity "stock" as stock {
+  * id : UUID <<PK>>
+  --
+  product_id : UUID <<FK products>>
+  warehouse_id : UUID <<FK warehouses>>
+  quantity : INT
+  reserved : INT
+  updated_at : TIMESTAMP
+}
+
+users ||--o{ carts
+users ||--o{ orders
+carts ||--o{ cart_items
+cart_items }o--|| products
+orders ||--o{ order_items
+orders ||--o{ order_status_history
+orders ||--o| payments
+orders ||--o| deliveries
+order_items }o--|| products
+order_items }o--|| warehouses
+stock }o--|| products
+stock }o--|| warehouses
+
+@enduml
+```
