@@ -1,0 +1,34 @@
+```plantuml
+@startuml
+!theme plain
+title Пирамида тестов
+
+skinparam defaultFontSize 14
+
+rectangle "E2E Tests (10%)\nСквозные сценарии\nМедленные, дорогие" as E2E #ff6b6b
+rectangle "Integration Tests (30%)\nAPI, БД, Kafka\nСредние по скорости" as INT #ffa500
+rectangle "Unit Tests (60%)\nЛогика сервисов\nБыстрые, дешёвые" as UNIT #4caf50
+
+UNIT -[hidden]- INT
+INT -[hidden]- E2E
+
+note right of UNIT
+  Запуск: на каждый commit
+  Время: ≤ 5 мин
+  Покрытие: ≥ 80%
+end note
+
+note right of INT
+  Запуск: на каждый PR
+  Время: ≤ 15 мин
+  Покрытие: ≥ 70%
+end note
+
+note right of E2E
+  Запуск: перед релизом
+  Время: ≤ 30 мин
+  Покрытие: ключевые сценарии
+end note
+
+@enduml
+```
