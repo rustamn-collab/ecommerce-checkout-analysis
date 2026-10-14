@@ -1,0 +1,36 @@
+```plantuml
+@startuml
+!theme plain
+title CI/CD Pipeline с тестированием
+
+start
+:Commit в feature-ветку;
+:Запуск Unit-тестов;
+if (Unit OK?) then (да)
+  :Сборка приложения;
+  :Запуск Integration-тестов;
+  if (Integration OK?) then (да)
+    :Публикация в registry;
+    :Деплой на stage;
+    :Запуск E2E-тестов;
+    :Нагрузочное тестирование;
+    if (Все OK?) then (да)
+      :Ручной approve;
+      :Деплой в prod;
+      :Smoke-тесты;
+      stop
+    else (нет)
+      :Откат;
+      stop
+    endif
+  else (нет)
+    :Блокировка PR;
+    stop
+  endif
+else (нет)
+  :Блокировка PR;
+  stop
+endif
+
+@enduml
+```
