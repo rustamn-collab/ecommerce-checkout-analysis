@@ -327,4 +327,7 @@
 | **Medium** | Работает, но с ограничениями | Fix ≤ 3 дней |
 | **Low** | Косметика, не влияет на бизнес | Fix ≤ 2 недель |
 
+### 12.12.2. Жизненный цикл бага
+![Жизненный цикл бага](../diagrams/bug-lifecycle.png)
 
+Исходник: [bug-lifecycle.puml](../diagrams/bug-lifecycle.puml)
