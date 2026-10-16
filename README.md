@@ -24,14 +24,36 @@
 | 14 | [Безопасность](docs/14-security.md) | PCI DSS, JWT, rate limiting |
 | 15 | [Риски и митигации](docs/15-risks.md) | Таблица рисков |
 
+
 ## 📐 Диаграммы
 
-- [Sequence-диаграмма оформления заказа](diagrams/sequence-diagram.puml)
-- [BPMN AS-IS](diagrams/bpmn-as-is.puml)
-- [BPMN TO-BE](diagrams/bpmn-to-be.puml)
-- [State Machine заказа](diagrams/state-machine.puml)
-- [Архитектура C4](diagrams/architecture-c4.puml)
+### Основные
 
+- [Sequence-диаграмма: Оформление заказа](diagrams/sequence-diagram.png) · [исходник](diagrams/sequence-diagram.puml)
+- [BPMN AS-IS](diagrams/bpmn-as-is.png) · [исходник](diagrams/bpmn-as-is.puml)
+- [BPMN TO-BE](diagrams/bpmn-to-be.png) · [исходник](diagrams/bpmn-to-be.puml)
+- [State Machine заказа](diagrams/state-machine.png) · [исходник](diagrams/state-machine.puml)
+- [ER-диаграмма](diagrams/er-diagram.png) · [исходник](diagrams/er-diagram.puml)
+
+### Архитектура (C4)
+
+- [C4 Context](diagrams/architecture-context.png) · [исходник](diagrams/architecture-context.puml)
+- [C4 Container](diagrams/architecture-container.png) · [исходник](diagrams/architecture-container.puml)
+- [C4 Component](diagrams/architecture-component.png) · [исходник](diagrams/architecture-component.puml)
+
+### Подпроцессы
+
+- [Расчёт корзины](diagrams/subprocess-cart.png) · [исходник](diagrams/subprocess-cart.puml)
+- [Резервирование товара](diagrams/subprocess-reservation.png) · [исходник](diagrams/subprocess-reservation.puml)
+- [Отмена заказа](diagrams/subprocess-cancel.png) · [исходник](diagrams/subprocess-cancel.puml)
+
+### Kafka и безопасность
+
+- [DLQ Flow](diagrams/kafka-dlq-flow.png) · [исходник](diagrams/kafka-dlq-flow.puml)
+- [Kafka Event Flow](diagrams/kafka-event-flow.png) · [исходник](diagrams/kafka-event-flow.puml)
+- [Distributed Tracing](diagrams/tracing-diagram.png) · [исходник](diagrams/tracing-diagram.puml)
+- [Incident Response](diagrams/incident-response.png) · [исходник](diagrams/incident-response.puml)
+- [Процесс управления рисками](diagrams/risk-process.png) · [исходник](diagrams/risk-process.puml)
 ## 🗄️ База данных
 
 - [SQL-схема](db/schema.sql)
