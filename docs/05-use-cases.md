@@ -284,7 +284,9 @@
 
 ### 5.2.9. Диаграмма последовательности
 
-Полная Sequence-диаграмма основного и альтернативных сценариев: [diagrams/sequence-diagram.puml](../diagrams/sequence-diagram.puml).
+![Sequence Diagram](../diagrams/sequence-diagram.png)
+
+Исходник: [sequence-diagram.puml](../diagrams/sequence-diagram.puml)
 
 ### 5.2.10. Трассировка
 
