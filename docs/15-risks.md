@@ -743,4 +743,8 @@
 | Реализованных рисков | 0 |
 
 ---
+### 15.13. Управление рисками: процесс
 
+![Процесс управления рисками](../diagrams/risk-process.png)
+
+Исходник: [risk-process.puml](../diagrams/risk-process.puml)
