@@ -1,0 +1,32 @@
+```plantuml
+@startuml
+!theme plain
+title Distributed Tracing: Оформление заказа
+
+participant "Frontend" as FE
+participant "API Gateway" as AG
+participant "Checkout Service" as CH
+participant "Cart Service" as CS
+participant "ERP" as ERP
+participant "Payment Gateway" as PG
+participant "Kafka" as K
+
+FE -> AG : POST /checkout/confirm\n[span: 1200ms]
+AG -> CH : Forward\n[span: 1100ms]
+CH -> CS : GET /cart\n[span: 80ms]
+CS -> ERP : Check stock\n[span: 50ms]
+ERP --> CS : OK
+CS --> CH : Cart data
+CH -> PG : Init payment\n[span: 350ms]
+PG --> CH : Payment URL
+CH -> K : Publish event\n[span: 20ms]
+CH --> AG : 201 Created\n[span: 1100ms]
+AG --> FE : 201 Created\n[span: 1200ms]
+
+note over FE, K
+  Общий Trace ID: t1t2t3t4-u5u6-7v8w-9x0y-1z2a3b4c5d6e
+  Total duration: 1200ms
+end note
+
+@enduml
+```
